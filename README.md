@@ -1,23 +1,23 @@
-Read the RHT03 Temperature and Humidity sensor with the esp8266
+### Use the ESP8266 to read sensor data and send it out as a UDP package
 
-Uses the DHT module included in the NodeMCU firmware.
+The current code uses the DHT module, included in the NodeMCU firmware, to query a RHT03 Temperature and Humidity sensor.
 
-Pre-requisits:
- * esp8266 flashed with NodeMCU
+#### Pre-requisits
+ * ESP8266 flashed with NodeMCU
 
-Upload lua script to esp8266:
+#### Upload lua script to ESP8266
  * disconnect any connected terminal programs
  * ```~/git/luatool/luatool/luatool.py --port /dev/tty.usbserial-A6XZ1VI2 --src ~/git/esp-sense/src/read-rht03.lua --dest read-rht03.lua --verbose```
 
-HW Connection:
- * RHT03 pins:  3.3v, esp8266-GPIO02, NC, GND
- * 1kOhm pull-upp between 3.3v and esp8266-GPIO02
+#### HW Connection
+ * RHT03 pins:  3.3v, ESP8266-GPIO02, NC, GND
+ * 1kOhm pull-upp between 3.3v and ESP8266-GPIO02
 
-Run:
- * Connect to the esp8266: minicom -D /dev/tty.usbserial-A6XZ1VI2 -b 9600
- * dofile("read-rht03.lua") -- Will load the DHT module and poll the sensor once 
+#### Run
+ * Connect to the ESP8266: ```minicom -D /dev/tty.usbserial-A6XZ1VI2 -b 9600```
+ * ```dofile("send-rht03-package.lua") -- Will load the DHT module and send the sensor data as UDP package, over wifi```
 
-Todo:
- * Read the sensor avery Xth time unit
- * Send the sensor data over wifi
- 
+#### Todo
+ * Move the access point and server settings out of the code.
+ * Send sensor data after wake-up/reset. Use deep sleep (dsleep) to save power. 
+ * Auto load the script.
