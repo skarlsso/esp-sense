@@ -22,11 +22,11 @@ socket=net.createConnection(net.UDP, 0)
 socket:on("receive", function(s, c) print (c) end )
 socket:connect(settings_server_port, settings_server_address)
 
--- Load the module for the rht03 temperature and humidity sensor.
-local dht_sensor = require("dht")
-
 -- Read the sensor and get rid of unneeded return values.
 local function read_sensor()
+    -- Load the module for the rht03 temperature and humidity sensor.
+    local dht_sensor = require("dht")
+
     local status, temperature, humidity, temperature_decimial, humidity_decimial = dht_sensor.read(sensor_pin);
 
     return status, temperature, humidity
