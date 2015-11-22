@@ -4,16 +4,12 @@
 -- Nodemcu ESP8266 number of the pin connected to the sensor.
 local sensor_pin = 4
 
--- Access point config. Change to suitable values.
-local wifi_ssid     = "WIFI_SSID"
-local wifi_password = "WIFI_PASSWORD"
-
--- Server config. Change to suitable values.
-local server_port    = 8000
-local server_address = "SERVER_ADDRESS"
+-- Read the settings from a separare file,
+-- so that the sensitive information isn't published here.
+dofile('settings.lua')
 
 -- Connect to the access point.
-wifi.sta.config(wifi_ssid, wifi_password)
+wifi.sta.config(settings_wifi_ssid, settings_wifi_password)
 wifi.sta.connect()
 
 -- Wait 5 seconds to make sure the unit has connected.
@@ -24,7 +20,7 @@ print(wifi.sta.getip())
 -- Setup a socket to the server.
 socket=net.createConnection(net.UDP, 0)
 socket:on("receive", function(s, c) print (c) end )
-socket:connect(server_port, server_address)
+socket:connect(settings_server_port, settings_server_address)
 
 -- Load the module for the rht03 temperature and humidity sensor.
 local dht_sensor = require("dht")
